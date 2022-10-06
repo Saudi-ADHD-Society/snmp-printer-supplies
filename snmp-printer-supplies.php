@@ -1,13 +1,11 @@
 <?php
 function check_printer_supplies( $ipaddress, $supplycount=null ) {
-    $printer_model = 'HOST-RESOURCES-MIB::hrDeviceDescr.1';
-    $name_base     = 'SNMPv2-SMI::mib-2.43.11.1.1.6.1.';
-    $value_base    = 'SNMPv2-SMI::mib-2.43.11.1.1.9.1.';
-    $total_base    = 'SNMPv2-SMI::mib-2.43.11.1.1.8.1.';
+    $model_base = 'HOST-RESOURCES-MIB::hrDeviceDescr.1';
+    $name_base  = 'SNMPv2-SMI::mib-2.43.11.1.1.6.1.';
+    $value_base = 'SNMPv2-SMI::mib-2.43.11.1.1.9.1.';
+    $total_base = 'SNMPv2-SMI::mib-2.43.11.1.1.8.1.';
 
-    $model_command = 'snmpwalk -v 1 -c public -O va ' . $ipaddress . ' ' . $printer_model;
-    $model_output = shell_exec( $model_command );
-    $model_output = str_replace( 'STRING: ', '', $model_output );
+    $model_output  = exec_snmpwalk( $ipaddress, $model_base . $i );
 
     $html  = "<h1>$model_output <small>$ipaddress</small></h1>";
     $html .= '<table border=1>';
