@@ -19,3 +19,18 @@ Insert the results table in the body:
 ```
 <?php echo $printer1['html']; ?>
 ```
+# Alternative
+
+To check supply levels from the command line, use the following commands:
+
+## supply types
+```
+snmpwalk -v 1 -c public -O va 192.168.0.103 SNMPv2-SMI::mib-2.43.11.1.1.6
+```
+
+## supply levels
+```
+snmpwalk -v 1 -c public -O va 192.168.0.103 SNMPv2-SMI::mib-2.43.11.1.1.9
+```
+
+The SNMPWALK program is also [downloadable](https://sourceforge.net/projects/net-snmp/files/net-snmp/) for Windows, but I have not tested it.
