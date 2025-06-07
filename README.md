@@ -41,5 +41,5 @@ A Python script has been added for automation. This is deployed on `zeus-automat
 
 ```
 # Check printer toner
-33 9 * * * python3 /home/jeremy/scripts/printers/snmp-printer-supplies.py
+33 9 * * * python3 /home/jeremy/scripts/printers/snmp-printer-supplies.py --email person1@adhd.org.sa --cc person2@adhd.org.sa
 ```
