@@ -2,6 +2,7 @@ import subprocess
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
+import argparse
 
 # Handle environments without __file__ 
 try:
@@ -29,6 +30,24 @@ PRINTERS = {
     "192.168.0.106": 5,
 #    "192.168.0.107": 1, # ID Card Printer
 }
+
+# Get email recipients from command line args
+parser = argparse.ArgumentParser(description="Monitor printer and notify.")
+parser.add_argument(
+    '--email',
+    nargs='+',
+    help='One or more email addresses to notify',
+    required=True
+)
+parser.add_argument(
+    '--cc',
+    nargs='*',
+    default=[],
+    help='Optional CC email addresses'
+)
+args = parser.parse_args()
+email_recipients = args.email
+cc_recipients = args.cc
 
 # --- Utilities ---
 
@@ -102,7 +121,7 @@ def check_printer(ip, supply_count, log):
             notify_slack(msg, "Info")
 
             notify_email(
-                to='jeremy@adhd.org.sa',
+                to='it@adhd.org.sa',
                 subject= f"Printer {printer_name} Offline",
                 body=msg,
             )
@@ -161,10 +180,10 @@ def check_printer(ip, supply_count, log):
         notify_slack(msg, "ToDo")
 
         notify_email(
-            to='person1@adhd.org.sa',
+            to=', '.join(email_recipients),
+            cc=', '.join(cc_recipients) if cc_recipients else None,
             subject='Order Printer Toner',
             body=msg,
-            cc='person2@adhd.org.sa',
         )
 
     record["toner_alerted"] = new_alerts
