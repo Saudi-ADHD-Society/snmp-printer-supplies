@@ -34,3 +34,12 @@ snmpwalk -v 1 -c public -O va 192.168.0.103 SNMPv2-SMI::mib-2.43.11.1.1.9
 ```
 
 The SNMPWALK program is also [downloadable](https://sourceforge.net/projects/net-snmp/files/net-snmp/) for Windows, but I have not tested it.
+
+# Automation
+
+A Python script has been added for automation. This is deployed on `zeus-automate` and symlinked by jeremy at `~/scripts/printers`. It is triggered by user cron daily:
+
+```
+# Check printer toner
+33 9 * * * python3 /home/jeremy/scripts/printers/snmp-printer-supplies.py
+```
