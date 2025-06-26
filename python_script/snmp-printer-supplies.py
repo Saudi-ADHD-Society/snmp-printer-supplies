@@ -12,7 +12,7 @@ except NameError:
 
 LOG_PATH = base_dir / "printer_status_log.json"
 SLACK_SCRIPT = "/home/jeremy/scripts/slack/slack_notify_lan_servers.sh"
-EMAIL_SCRIPT = '/home/jeremy/scripts/email_notify/send_mail.py'
+EMAIL_SCRIPT = '/home/jeremy/scripts/email_notify/send_email'
 
 # SNMP OIDs (numeric)
 SYS_DESCR_OID = ".1.3.6.1.2.1.1.1.0"
@@ -75,7 +75,7 @@ def notify_slack(message, level):
     subprocess.run([SLACK_SCRIPT, message, level])
 
 def notify_email(to, subject, body, cc=None):
-    cmd = ['python3', EMAIL_SCRIPT, '--to', to, '--subject', subject, '--body', body]
+    cmd = [EMAIL_SCRIPT, '--to', to, '--subject', subject, '--body', body]
     if cc:
         cmd.extend(['--cc', cc])
     subprocess.run(cmd)
